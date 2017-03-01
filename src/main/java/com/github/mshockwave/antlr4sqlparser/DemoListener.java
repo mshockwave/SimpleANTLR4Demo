@@ -6,6 +6,17 @@ import com.github.mshockwave.antlr4sqlparser.antlr.SQLiteParser;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class shows the role of listener in ANTLR4 framework.
+ * Keep in mind that the input program has been parsed before entering
+ * listener, so actually both enterFoo and exitFoo callback methods can
+ * retrieve the fully parsed content(i.e. the parse tree) of the "foo" rule.
+ * Then what's the different between enterFoo and exitFoo?
+ * The walker would walk into the nested rules within "foo" after calling enterFoo
+ * and before exitFoo. So the key point is that exitFoo can observe the actions
+ * or more generally speaking, side effects, performed by nested rules,
+ * but not for enterFoo.
+ * **/
 public class DemoListener extends SQLiteBaseListener{
 
     private Set<String> mExprStrings = new HashSet<>();
@@ -17,7 +28,7 @@ public class DemoListener extends SQLiteBaseListener{
 
     @Override
     public void enterSelect_core(SQLiteParser.Select_coreContext ctx) {
-        //System.out.println("Enter select_core");
+
         if(ctx.K_VALUES() != null){
             System.out.println("Entering VALUES statement");
             System.out.println("Got " + ctx.expr().size() + " expression(s)");
@@ -32,12 +43,13 @@ public class DemoListener extends SQLiteBaseListener{
 
     @Override
     public void enterExpr(SQLiteParser.ExprContext ctx) {
+        // expr rule is nested within select_core rule
         mExprStrings.add(ctx.getText());
     }
 
     @Override
     public void exitSelect_core(SQLiteParser.Select_coreContext ctx) {
-        //System.out.println("Exit select_core");
+
         switch (mCurrentAction){
             case SELECT:
                 System.out.println("Expression(s) in this SELECT:");
@@ -47,6 +59,8 @@ public class DemoListener extends SQLiteBaseListener{
                 break;
         }
 
+        // Can observe the side effects produced by the nested rules,
+        // that is, enterExpr in this case
         for(String exprString : mExprStrings){
             System.out.println(exprString);
         }
