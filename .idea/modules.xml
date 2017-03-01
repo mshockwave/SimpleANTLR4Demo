@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/antlr4-sql-parser.iml" filepath="$PROJECT_DIR$/.idea/modules/antlr4-sql-parser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/antlr4-sql-parser_main.iml" filepath="$PROJECT_DIR$/.idea/modules/antlr4-sql-parser_main.iml" group="antlr4-sql-parser" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/antlr4-sql-parser_test.iml" filepath="$PROJECT_DIR$/.idea/modules/antlr4-sql-parser_test.iml" group="antlr4-sql-parser" />
+    </modules>
+  </component>
+</project>
